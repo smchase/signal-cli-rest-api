@@ -2519,12 +2519,12 @@ func (s *SignalClient) ListContacts(number string) ([]ListContactsResponse, erro
 		if err != nil {
 			return nil, err
 		}
-		rawData, err = jsonRpc2Client.getRaw("listContacts", &number, nil)
+		rawData, err = jsonRpc2Client.getRaw("listContacts", &number, map[string]bool{"allRecipients": true})
 		if err != nil {
 			return resp, err
 		}
 	} else {
-		cmd := []string{"--config", s.signalCliConfig, "-o", "json", "-a", number, "listContacts"}
+		cmd := []string{"--config", s.signalCliConfig, "-o", "json", "-a", number, "listContacts", "--all-recipients"}
 		rawData, err = s.cliClient.Execute(true, cmd, "")
 		if err != nil {
 			return resp, err
